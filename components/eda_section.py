@@ -33,6 +33,14 @@ def display_eda_section(df: pd.DataFrame):
                      hover_data=["price"])
     st.plotly_chart(fig, use_container_width=True)
     
+    # Relación entre Precio y tipo de habitación
+    st.subheader("Precio según el tipo de habitación"
+    df = px.data.gapminder()
+    fig = px.scatter(df, x="room_type", y="price",
+	         size="price", color="room-type",
+                 hover_name="price", log_x=True, size_max=60)
+    fig.show())
+    
     # Matriz de Correlación
     st.subheader("Matriz de Correlación")
     numeric_cols = df.select_dtypes(include=[np.number]).columns
