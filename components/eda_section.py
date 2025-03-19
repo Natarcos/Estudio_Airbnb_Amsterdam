@@ -36,7 +36,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 # Relación entre Precio y tipo de habitación
 st.subheader("Precio según el tipo de habitación")
-fig = px.scatter(df, x="room_type", y="price", color="room_type", title="Precio,
+fig = px.scatter(df, x="room_type", y="price", color="room_type",
                 size="price", hover_name="room_type", log_x=True, size_max=60)
 st.plotly_chart(fig, use_container_width=True)
 
