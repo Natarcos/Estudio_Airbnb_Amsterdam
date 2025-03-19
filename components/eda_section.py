@@ -10,6 +10,12 @@ def display_eda_section(df: pd.DataFrame):
     fig = px.histogram(df, x="price", nbins=50, title="Histograma de Precios")
     st.plotly_chart(fig, use_container_width=True)
     
+    st.subheader("Barrios en los que se concentran los alojamientos")
+    neighborhood_counts = df['neighbourhood'].value_counts().reset_index()
+    neighborhood_counts.columns = ['neighbourhood', 'count']
+    fig = px.pie(neighborhood_counts, values='count', names='neighbourhood', title='Distribución de Alojamientos por Barrio')
+    st.plotly_chart(fig, use_container_width=True)
+    
     st.subheader("Matriz de Correlación")
     numeric_cols = df.select_dtypes(include=[np.number]).columns
     corr = df[numeric_cols].corr()
