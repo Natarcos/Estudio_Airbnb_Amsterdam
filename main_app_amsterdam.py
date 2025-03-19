@@ -20,7 +20,7 @@ st.set_page_config(
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("/Users/n.arcos89/Documents/GitHub/Estudio_Airbnb_Amsterdam/Data/airbnbamsterdam_final_correcto.csv")
+    df = pd.read_csv("Data/airbnbamsterdam_final_correcto.csv")
     df['last_review'] = pd.to_datetime(df['last_review'])
     df['reviews_per_month'].fillna(0, inplace=True)
     df['last_review'].fillna(pd.Timestamp('1900-01-01'), inplace=True)
