@@ -13,6 +13,14 @@ def display_eda_section(df: pd.DataFrame):
     st.subheader("Barrios en los que se concentran los alojamientos")
     neighborhood_counts = df['neighbourhood'].value_counts().reset_index()
     neighborhood_counts.columns = ['neighbourhood', 'count']
+    
+    # Agrupar barrios con pocos alojamientos en "Otros"
+    threshold = 0.01  # Umbral para agrupar en "Otros"
+    total_count = neighborhood_counts['count'].sum()
+    neighborhood_counts['percentage'] = neighborhood_counts['count'] / total_count
+    neighborhood_counts.loc[neighborhood_counts['percentage'] < threshold, 'neighbourhood'] = 'Otros'
+    neighborhood_counts = neighborhood_counts.groupby('neighbourhood').sum().reset_index()
+    
     fig = px.pie(neighborhood_counts, values='count', names='neighbourhood', title='Distribución de Alojamientos por Barrio')
     st.plotly_chart(fig, use_container_width=True)
     
