@@ -30,6 +30,12 @@ def display_eda_section(df: pd.DataFrame):
     hover_data=["price"])
     st.plotly_chart(fig, use_container_width=True)
     
+    st.subheader("Variación de los precios por barrios")
+    fig = px.scatter(df, x="neighbourhood", y="price", color="neighbourhood"
+                     labels={"neighbourhood": "Barrio", "price": "Precio"},
+                     hover_data=["price"])
+    st.plotly_chart(fig, use_container_width=True)
+    
     st.subheader("Matriz de Correlación")
     numeric_cols = df.select_dtypes(include=[np.number]).columns
     corr = df[numeric_cols].corr()
