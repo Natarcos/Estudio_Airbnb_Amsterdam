@@ -1,16 +1,31 @@
+# filepath: /Users/n.arcos89/Documents/GitHub/Estudio_Airbnb_Amsterdam/Components/ml_section.py
 import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
-
+import os
 
 def display_ml_section():
     st.header("🤖 Planifica tu Presupuesto - Predicción de Precios")
 
     # Cargar modelo, scaler y columnas
-    model = joblib.load("models/airbnb_model.pkl")
-    scaler = joblib.load("models/scaler.pkl")
-    feature_names = joblib.load("models/features_names.pkl")
+    model_path = "Models/airbnb_model.pkl"
+    scaler_path = "Models/scaler.pkl"
+    feature_names_path = "Models/features_names.pkl"
+
+    if not os.path.exists(model_path):
+        st.error(f"El archivo del modelo no se encontró en la ruta: {model_path}")
+        return
+    if not os.path.exists(scaler_path):
+        st.error(f"El archivo del scaler no se encontró en la ruta: {scaler_path}")
+        return
+    if not os.path.exists(feature_names_path):
+        st.error(f"El archivo de nombres de características no se encontró en la ruta: {feature_names_path}")
+        return
+
+    model = joblib.load(model_path)
+    scaler = joblib.load(scaler_path)
+    feature_names = joblib.load(feature_names_path)
 
     st.markdown("""
     Ajusta los parámetros de tu alojamiento ideal y obtén una estimación del precio.
