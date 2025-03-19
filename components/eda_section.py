@@ -21,7 +21,7 @@ def display_eda_section(df: pd.DataFrame):
     neighborhood_counts.loc[neighborhood_counts['percentage'] < threshold, 'neighbourhood'] = 'Otros'
     neighborhood_counts = neighborhood_counts.groupby('neighbourhood').sum().reset_index()
     
-    fig = px.pie(neighborhood_counts, values='count', names='neighbourhood', title='Distribución de Alojamientos por Barrio')
+    fig = px.pie(neighborhood_counts, values='count', names='neighbourhood')
     st.plotly_chart(fig, use_container_width=True)
     
     st.subheader("Matriz de Correlación")
