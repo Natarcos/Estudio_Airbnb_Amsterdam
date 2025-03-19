@@ -8,13 +8,9 @@ def display_ml_section():
     st.header("🤖 Planifica tu Presupuesto - Predicción de Precios")
 
     # Cargar modelo, scaler y columnas
-    model_path = "Models/airbnb_model.pkl"
-    if not os.path.exists(model_path):
-        st.error(f"El archivo del modelo no se encontró en la ruta: {model_path}")
-        return
-    model = joblib.load(model_path)
-    scaler = joblib.load("Models/scaler.pkl")
-    feature_names = joblib.load("Models/features_names.pkl")
+    model = joblib.load("models/airbnb_model.pkl")
+    scaler = joblib.load("models/scaler.pkl")
+    feature_names = joblib.load("models/features_names.pkl")
 
     st.markdown("""
     Ajusta los parámetros de tu alojamiento ideal y obtén una estimación del precio.
