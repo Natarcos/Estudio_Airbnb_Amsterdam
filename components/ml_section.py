@@ -8,9 +8,9 @@ def display_ml_section():
     st.header("🤖 Planifica tu Presupuesto - Predicción de Precios")
 
     # Cargar modelo, scaler y columnas
-    model = joblib.load("models/airbnb_model.pkl")
-    scaler = joblib.load("models/scaler.pkl")
-    feature_names = joblib.load("models/features_names.pkl")
+    model = joblib.load("/Users/n.arcos89/Documents/GitHub/Estudio_Airbnb_Amsterdam/Models/airbnb_model.pkl")
+    scaler = joblib.load("/Users/n.arcos89/Documents/GitHub/Estudio_Airbnb_Amsterdam/Models/scaler.pkl")
+    feature_names = joblib.load("/Users/n.arcos89/Documents/GitHub/Estudio_Airbnb_Amsterdam/Models/features_names.pkl")
 
     st.markdown("""
     Ajusta los parámetros de tu alojamiento ideal y obtén una estimación del precio.
