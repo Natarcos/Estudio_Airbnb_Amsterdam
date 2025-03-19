@@ -26,19 +26,6 @@ def display_eda_section(df: pd.DataFrame):
     fig = px.pie(neighborhood_counts, values='count', names='neighbourhood', title='Distribución de Alojamientos por Barrio')
     st.plotly_chart(fig, use_container_width=True)
 
-    # Relación entre Precio y Barrio
-    st.subheader("Variación de los precios por barrios")
-    fig = px.scatter(df, x="neighbourhood", y="price", color="neighbourhood",
-                     labels={"neighbourhood": "Barrio", "price": "Precio"},
-                     hover_data=["price"])
-    st.plotly_chart(fig, use_container_width=True)
-
-    # Relación entre Precio y tipo de habitación
-    st.subheader("Precio según el tipo de habitación")
-    fig = px.scatter(df, x="room_type", y="price", color="room_type",
-                     size="price", hover_name="room_type", log_x=True, size_max=60)
-    st.plotly_chart(fig, use_container_width=True)
-
     # Matriz de Correlación
     st.subheader("Matriz de Correlación")
     numeric_cols = df.select_dtypes(include=[np.number]).columns
