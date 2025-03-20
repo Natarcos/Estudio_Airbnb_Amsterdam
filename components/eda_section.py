@@ -50,8 +50,11 @@ def display_eda_section(df: pd.DataFrame):
     st.subheader("Relación entre Precio y Número de Reseñas")
     # Asegúrate de que no hay valores nulos en las columnas 'price' y 'number_of_reviews'
     df_filtered_reviews = df.dropna(subset=['price', 'number_of_reviews'])
-    fig = px.box(df_filtered_reviews, x="number_of_reviews", y="price", points="all",
-                labels={"number_of_reviews": "Número de Reseñas", "price": "Precio"})
+    # Crear categorías para el número de reseñas
+    df_filtered_reviews['reviews_category'] = pd.cut(df_filtered_reviews['number_of_reviews'], bins=[0, 10, 50, 100, 500, 1000, np.inf], labels=['0-10', '11-50', '51-100', '101-500', '501-1000', '1000+'])
+    fig = px.box(df_filtered_reviews, x="reviews_category", y="price", points="all",
+                title="Relación entre Precio y Número de Reseñas",
+                labels={"reviews_category": "Categoría de Reseñas", "price": "Precio"})
     st.plotly_chart(fig, use_container_width=True)
 
     # Matriz de Correlación
