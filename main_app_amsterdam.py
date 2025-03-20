@@ -1,3 +1,4 @@
+t
 import streamlit as st
 import pandas as pd
 import warnings
@@ -9,18 +10,18 @@ from components.eda_section import display_eda_section
 from components.ml_section import display_ml_section
 
 
-warnings.filterwarnings ('ignore')
+warnings.filterwarnings('ignore')
 
 st.set_page_config(
-    page_title="Descubre Amsterdam a través de Airbnb",
+    page_title="🏠 Descubre Amsterdam a través de Airbnb",
     page_icon="🏠",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("Data/airbnbamsterdam_final_correcto.csv")
+    df = pd.read_csv("/Users/n.arcos89/Documents/GitHub/Estudio_Airbnb_Amsterdam/Data/airbnbamsterdam_final_correcto.csv")
     df['last_review'] = pd.to_datetime(df['last_review'])
     df['reviews_per_month'].fillna(0, inplace=True)
     df['last_review'].fillna(pd.Timestamp('1900-01-01'), inplace=True)
@@ -40,13 +41,13 @@ def main():
 
         choices = st.sidebar.radio("Selecciona una sección", list(pages.keys()))
         st.sidebar.markdown("---")
-        st.sidebar.markdown("### Amsterdam en un vistazo:")
+        st.sidebar.markdown("### Madrid en un vistazo:")
         st.sidebar.markdown("""
         🎭 **¿Por qué Amsterdam?**
         - Hermosos canales
-        - Cultura vibrante
-        - Rica Historia
-        - Inclusión
+        - Cultura Vibrante
+        - Rica historia
+        - Inclusión y diversidad
         """)
 
         if choices != "🤖 ML Predictor":
