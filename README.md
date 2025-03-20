@@ -10,6 +10,8 @@
 
 Aplicación web desarrollada con Streamlit para el análisis de datos de Airbnb en Amsterdam, Países Bajos. Esta herramienta permite visualizar y analizar información sobre alojamientos, precios, ubicaciones y tendencias del mercado de alquiler vacacional en la ciudad.
 
+App de streamlit con el análisis y un planificador de precios: https://estudio-airbnb-amsterdam-na.streamlit.app/#4c74357f
+
 ### ✨ Características
 
 * Exploración interactiva de propiedades
@@ -26,3 +28,5 @@ Aplicación web desarrollada con Streamlit para el análisis de datos de Airbnb 
 ---
 
 *Descubre los secretos del mercado de alquiler en una de las ciudades más fascinantes de Europa*
+
+Trabajo realizado para la presentación final del módulo dos en el Bootcamp de Análisis de Datos de Upgrade. 
