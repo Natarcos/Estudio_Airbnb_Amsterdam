@@ -50,9 +50,8 @@ def display_eda_section(df: pd.DataFrame):
     st.subheader("Relación entre Precio y Número de Reseñas")
     # Asegúrate de que no hay valores nulos en las columnas 'price' y 'number_of_reviews'
     df_filtered_reviews = df.dropna(subset=['price', 'number_of_reviews'])
-    fig = px.density_heatmap(df_filtered_reviews, x="number_of_reviews", y="price", nbinsx=30, nbinsy=30,
-                            title="Relación entre Precio y Número de Reseñas",
-                            labels={"number_of_reviews": "Número de Reseñas", "price": "Precio"})
+    fig = px.box(df_filtered_reviews, x="number_of_reviews", y="price", points="all",
+                labels={"number_of_reviews": "Número de Reseñas", "price": "Precio"})
     st.plotly_chart(fig, use_container_width=True)
 
     # Matriz de Correlación
