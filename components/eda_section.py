@@ -35,7 +35,9 @@ def display_eda_section(df: pd.DataFrame):
 
     # Relación entre Precio y Tipo de Habitación
     st.subheader("Precio según el tipo de habitación")
-    fig = px.scatter(df, x="room_type", y="price", color="room_type",
+    # Asegúrate de que no hay valores nulos en las columnas 'room_type' y 'price'
+    df_filtered = df.dropna(subset=['room_type', 'price'])
+    fig = px.scatter(df_filtered, x="room_type", y="price", color="room_type",
                      size="price", hover_name="room_type", title="Precio de Alojamientos por Tipo de Habitación",
                      labels={"room_type": "Tipo de Habitación", "price": "Precio"},
                      log_x=True, size_max=60)
