@@ -29,16 +29,6 @@ def main():
     render_header()
     df = load_data()
 
-    # Verificar los primeros registros del DataFrame
-    st.write("Primeros registros del DataFrame:")
-    st.write(df.head())
-
-    # Verificar las columnas 'price' y 'room_type'
-    st.write("Valores únicos en 'room_type':")
-    st.write(df['room_type'].unique())
-    st.write("Valores únicos en 'price':")
-    st.write(df['price'].unique())
-
     if df is not None:
         st.sidebar.title("Navegación")
         pages = {
