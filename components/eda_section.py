@@ -33,14 +33,17 @@ def display_eda_section(df: pd.DataFrame):
                  hover_data=["price"])
     st.plotly_chart(fig, use_container_width=True)
 
-    # Relación entre Precio y Tipo de Habitación
-    st.subheader("Precio según el tipo de habitación")
+   # Relación entre Precio y Tipo de Habitación
+    st.subheader("Precio medio según el tipo de habitación")
     # Asegúrate de que no hay valores nulos en las columnas 'room_type' y 'price'
     df_filtered = df.dropna(subset=['room_type', 'price'])
-    fig = px.scatter(df_filtered, x="room_type", y="price", color="room_type",
-                     size="price", hover_name="room_type", title="Precio de Alojamientos por Tipo de Habitación",
-                     labels={"room_type": "Tipo de Habitación", "price": "Precio"},
-                     log_x=True, size_max=60)
+    avg_price_by_room_type = df_filtered.groupby('room_type')['price'].mean().reset_index()
+    avg_price_by_room_type.columns = ['room_type', 'avg_price']
+
+    fig = px.scatter(avg_price_by_room_type, x="room_type", y="avg_price", size="avg_price", color="room_type",
+                     title="Precio Medio de Alojamientos por Tipo de Habitación",
+                     labels={"room_type": "Tipo de Habitación", "avg_price": "Precio Medio"},
+                     size_max=60)
     st.plotly_chart(fig, use_container_width=True)
 
     # Matriz de Correlación
