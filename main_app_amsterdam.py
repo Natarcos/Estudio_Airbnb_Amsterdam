@@ -1,59 +1,54 @@
 import streamlit as st
 import pandas as pd
-import warnings
+import plotly.express as px
+import numpy as np
 
-from components.header import render_header
-from components.footer import render_footer
-from components.data_section import display_data_section
-from components.eda_section import display_eda_section
-from components.ml_section import display_ml_section
+def display_eda_section(df: pd.DataFrame):
+    st.header("📈 Análisis Exploratorio")
 
-warnings.filterwarnings('ignore')
+    # Distribución de Precios
+    st.subheader("Distribución de Precios")
+    fig = px.histogram(df, x="price", nbins=50, title="Histograma de Precios")
+    st.plotly_chart(fig, use_container_width=True)
 
-st.set_page_config(
-    page_title="Descubre Amsterdam a través de Airbnb",
-    page_icon="🏠",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+    # Barrios en los que se concentran los alojamientos
+    st.subheader("Barrios en los que se concentran los alojamientos")
+    neighborhood_counts = df['neighbourhood'].value_counts().reset_index()
+    neighborhood_counts.columns = ['neighbourhood', 'count']
 
-@st.cache_data
-def load_data():
-    df = pd.read_csv("Data/airbnbamsterdam_final_correcto.csv")
-    df['last_review'] = pd.to_datetime(df['last_review'])
-    df['reviews_per_month'].fillna(0, inplace=True)
-    df['last_review'].fillna(pd.Timestamp('1900-01-01'), inplace=True)
-    return df
+    # Agrupar barrios con pocos alojamientos en "Otros"
+    threshold = 0.01  # Umbral para agrupar en "Otros"
+    total_count = neighborhood_counts['count'].sum()
+    neighborhood_counts['percentage'] = neighborhood_counts['count'] / total_count
+    neighborhood_counts.loc[neighborhood_counts['percentage'] < threshold, 'neighbourhood'] = 'Otros'
+    neighborhood_counts = neighborhood_counts.groupby('neighbourhood').sum().reset_index()
 
-def main():
-    render_header()
-    df = load_data()
+    fig = px.pie(neighborhood_counts, values='count', names='neighbourhood', title='Distribución de Alojamientos por Barrio')
+    st.plotly_chart(fig, use_container_width=True)
 
-    if df is not None:
-        st.sidebar.title("Navegación")
-        pages = {
-            "📊 Datos": display_data_section,
-            "📈 EDA": display_eda_section,
-            "🤖 ML Predictor": display_ml_section
-        }
+    # Relación entre Precio y Barrio
+    st.subheader("Variación de los precios por barrios")
+    fig = px.bar(df, x="neighbourhood", y="price", color="neighbourhood",
+                 labels={"neighbourhood": "Barrio", "price": "Precio por Noche"},
+                 hover_data=["price"])
+    st.plotly_chart(fig, use_container_width=True)
 
-        choices = st.sidebar.radio("Selecciona una sección", list(pages.keys()))
-        st.sidebar.markdown("---")
-        st.sidebar.markdown("### Amsterdam en un vistazo:")
-        st.sidebar.markdown("""
-        🎭 **¿Por qué Amsterdam?**
-        - Hermosos canales
-        - Cultura vibrante
-        - Rica Historia
-        - Inclusión
-        """)
+    # Relación entre Precio y Tipo de Habitación
+    st.subheader("Precio medio según el tipo de habitación")
+    # Asegúrate de que no hay valores nulos en las columnas 'room_type' y 'price'
+    df_filtered = df.dropna(subset=['room_type', 'price'])
+    avg_price_by_room_type = df_filtered.groupby('room_type')['price'].mean().reset_index()
+    avg_price_by_room_type.columns = ['room_type', 'avg_price']
 
-        if choices != "🤖 ML Predictor":
-            pages[choices](df)
-        else:
-            pages[choices]()
+    fig = px.scatter(avg_price_by_room_type, x="room_type", y="avg_price", size="avg_price", color="room_type",
+                     title="Precio Medio de Alojamientos por Tipo de Habitación",
+                     labels={"room_type": "Tipo de Habitación", "avg_price": "Precio Medio"},
+                     size_max=60)
+    st.plotly_chart(fig, use_container_width=True)
 
-        render_footer()
-
-if __name__ == "__main__":
-    main()
+    # Matriz de Correlación
+    st.subheader("Matriz de Correlación")
+    numeric_cols = df.select_dtypes(include=[np.number]).columns
+    corr = df[numeric_cols].corr()
+    fig_corr = px.imshow(corr, text_auto=True, aspect="auto", title="Correlaciones")
+    st.plotly_chart(fig_corr, use_container_width=True)
