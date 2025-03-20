@@ -32,12 +32,13 @@ def display_eda_section(df: pd.DataFrame):
                  labels={"neighbourhood": "Barrio", "price": "Precio por Noche"},
                  hover_data=["price"])
     st.plotly_chart(fig, use_container_width=True)
-    
-    # Relación entre Precio y Barrio
-    st.subheader("Variación de los precios por barrios")
-    fig = px.bar(df, x="neighbourhood", y="price", color="neighbourhood",
-                 labels={"neighbourhood": "Barrio", "price": "Precio por Noche"},
-                 hover_data=["price"])
+
+    # Relación entre Precio y Tipo de Habitación
+    st.subheader("Precio según el tipo de habitación")
+    fig = px.scatter(df, x="room_type", y="price", color="room_type",
+                     size="price", hover_name="room_type", title="Precio de Alojamientos por Tipo de Habitación",
+                     labels={"room_type": "Tipo de Habitación", "price": "Precio"},
+                     log_x=True, size_max=60)
     st.plotly_chart(fig, use_container_width=True)
 
     # Matriz de Correlación
