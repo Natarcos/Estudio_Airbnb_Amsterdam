@@ -32,6 +32,13 @@ def display_eda_section(df: pd.DataFrame):
                  labels={"neighbourhood": "Barrio", "price": "Precio por Noche"},
                  hover_data=["price"])
     st.plotly_chart(fig, use_container_width=True)
+    
+    # Relación entre Precio y Barrio
+    st.subheader("Variación de los precios por barrios")
+    fig = px.bar(df, x="neighbourhood", y="price", color="neighbourhood",
+                 labels={"neighbourhood": "Barrio", "price": "Precio por Noche"},
+                 hover_data=["price"])
+    st.plotly_chart(fig, use_container_width=True)
 
     # Matriz de Correlación
     st.subheader("Matriz de Correlación")
